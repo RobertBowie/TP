@@ -26,5 +26,13 @@ The first node is considered odd, the second node even and so on ...
  * @return {ListNode}
  */
 var oddEvenList = function(head) {
-  
+  // make sure we have valid input
+
+  // init vars for odd and even tracking
+
+  // go though the list until we hit null
+
+    //set odd.nexts to odd.next.next
+
+    // set even.nexts to even.next.next
 };
