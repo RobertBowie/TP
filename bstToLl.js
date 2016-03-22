@@ -1,68 +1,81 @@
-//  Flatten a binary search tree to a linked list, in place:
+// Flatten a binary search tree to a linked list, in place:
 
-// Output: flattened tree
+// Output: Flattened tree that resembles a linked list
 
 // Input: Binary tree
 
-// Constraints: in place
+// Constraints: In place
 
-// Edge Cases: 
-
-//     {val: 1, right: null, left: null}  ->  {val: 1, right: null, left: null}
+// I/O: 
 
 //     {val: 1, right: {val: 3, right: null, left: null}, left: {val: 2, right: null, left: null}}
 //  -> {val: 1, right: {val: 2, right: {val: 3, right: null, left: null}, left: null}, left: null}
+
 /*
+
        1
-      /\
+      / \
      2   5
     / \ / \
    3  4 6  7
 
  1
- \
-  2
   \
-   3
-   \
-     4
-     \
-      5
-
-// given the root node, and optional child node (node.right)
-
-// set temp var to curr right node
-// set temp var to curr left node
-
-// Base case:  when both r&l are null and [there are no other nodes the current level]
-
-// set left prop to null
-
-// set right to tempLeft
-
-// recurse: pass in each child
+   2
+    \
+     3
+      \
+       4
+        \
+         5
+          \
+           6
+            \
+             7
 
 */
 
 function flattenTree(node) {
+  // if a node has no children -> return
   if (!hasAChild(node)) { return };
-  var oldRight = node.right;
-  // if node.left.left is null
-  if (node.left && node.left.left === null) {
-    // set node.right = node.left
-    node.right = node.left;
-    // clear node.left
-    node.left = null;
-    // node.right.right = oldRight
-    node.right.right = oldRight;
+  // recurse to the second furthest .left
+  if (node.left && node.left.left !== null) {
+    flattenTree(node.left);
   }
-  // recurse
-  flattenTree(node.right);
+  // save the current .right and its children for transplant
+  var oldRight = node.right;
+  // overwrite the current .right
+  node.right = node.left;
+  // clear node.left
+  node.left = null;
+  // add oldRight to the end of the .rights
+  if (oldRight !== null) {
+    appendToRightmost(oldRight, node);
+    flattenTree(oldRight);
+  }
+};
+
+// ---------------------------------------------
+// Helper Functions:
+// ---------------------------------------------
+
+function appendToRightmost(toAppend, prevNode) {
+  var tempNode = prevNode;
+  if (tempNode.right === null) {
+    tempNode.right = toAppend;
+  } else {
+    tempNode = tempNode.right;
+    appendToRightmost(toAppend, tempNode);
+  }
 };
 
 function hasAChild(node) {
-  return node.right || node.left;
+  return node && node.right !== null || node.left !== null;
 };
+
+// ---------------------------------------------
+// Very basic pseudo-classical Tree for testing
+// ---------------------------------------------
 
 function TreeNode(val) {
   this.val = val;
@@ -96,10 +109,4 @@ Tree.prototype = {
 };
 
 
-// {val: 1, right: {val: 3, right: null, left: null}, left: {val: 2, right: null, left: null}};
-var testTree = new Tree(2);
-testTree.addChild(1);
-testTree.addChild(3);
-console.log(testTree);
-flattenTree(testTree.root);
-console.log(testTree.root);
+// {root: {val: 1, right: {val: 5, right: {val: 7, right: null, left: null}, left: {val: 6, right: null, left: null}}, left: {val: 2, right: {val: 4, right: null, left: null}, left: {val: 3, right: null, left: null}}}};
