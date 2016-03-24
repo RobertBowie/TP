@@ -20,5 +20,23 @@ return false.
  */
 
 var increasingTriplet = function(nums) {
-  
+  // Set up variables:
+
+  // Iterate over nums:
+
+    // num = nums[iteration]
+
+    // if num <= lowest
+
+      // lowest = num
+
+    // else if num < mid
+
+      // mid = num
+
+    // else if num > mid
+
+      // return true
+
+    // when all else fails return false
 };
