@@ -21,22 +21,24 @@ return false.
 
 var increasingTriplet = function(nums) {
   // Set up variables:
-
+  var lowest = Number.MAX_VALUE;
+  var mid = Number.MAX_VALUE;;
   // Iterate over nums:
-
+  for (var i = 0; i < nums.length; i++) {
     // num = nums[iteration]
-
+    var num = nums[i];
     // if num <= lowest
-
+    if (num <= lowest) {
       // lowest = num
-
-    // else if num < mid
-
+      lowest = num;
+    } else if (num < mid) { // else if num < mid
       // mid = num
-
-    // else if num > mid
-
+      mid = num;
+    } else if (num > mid) {// else if num > mid
       // return true
-
-    // when all else fails return false
+      return true;
+    }
+  }
+  // when all else fails return false
+  return false;
 };
