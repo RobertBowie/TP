@@ -18,5 +18,43 @@ In this question, we represent the board using a 2D array. In principle, the boa
  */
 
 var gameOfLife = function(board) {
-  
+
+  // Internal function for recursing given a single cell
+
+    // var to track of if we are going to change a cell
+
+    // var to track live neighbors
+
+    // if the cell is live
+
+      // if liveNeighbors is < 2 or > 3
+
+        // set toggleCell to true
+
+    // if the cell is dead
+
+      // if liveNeighbors is 3
+
+        // toggleCell = true
+
+  // Utility function for counting up live neighbors
+
+    //
 };
+
+function makeBoard(m, n) {
+  var board = {};
+  board.container = [];
+  for (var i = 0; i < m; i++) {
+    board.container.push([]);
+    for (var j = 0; j < n; j++) {
+      board.container[i].push(Math.floor(Math.random() * 2));
+    }
+  }
+  board.print = function() {
+    for (var i = 0; i < board.container.length; i++) {
+      console.log(board.container[i]);
+    }
+  };
+  return board;
+}
