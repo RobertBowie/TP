@@ -21,9 +21,11 @@ var gameOfLife = function(board) {
 
   // Internal function for recursing given a single cell
 
+    // Base Case: There are no more cells to check
+
     // var to track of if we are going to change a cell
 
-    // var to track live neighbors
+    // var to track live neighbors = countLiveNeighbors()
 
     // if the cell is live
 
@@ -37,9 +39,19 @@ var gameOfLife = function(board) {
 
         // toggleCell = true
 
+    // cell = 3 <- a marker
+
+    // recurse over next cell
+
   // Utility function for counting up live neighbors
 
-    //
+    // check each neighbor in turn
+
+      // if live then live++
+
+    // return live
+
+  //
 };
 
 function makeBoard(m, n) {
