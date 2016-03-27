@@ -24,14 +24,14 @@ var gameOfLife = function(board) {
   function boardWalker(rowInd, colInd) {
     if (breakFlag) { return; }
     // Base Case: We are off the board or have dealt with a cell already:
-    if (maxIterations < 1) { console.log('Over max iterations!  Stopping...'); return; }
+    // if (maxIterations < 1) { console.log('Over max iterations!  Stopping...'); return; }
     if (!board[rowInd] || board[rowInd][colInd] === undefined || board[rowInd][colInd] === 3 || board[rowInd][colInd] === 4) { return; }
     // var to hold cell's current state
     var cellState = board[rowInd][colInd];
-    console.log('cellState of [' + rowInd + '][' + colInd + '] set to: ', cellState);
+    // console.log('cellState of [' + rowInd + '][' + colInd + '] set to: ', cellState);
     // var to track live neighbors = adjacentStatus.live
     var adjacentStatus = adjCheck(rowInd, colInd);
-    console.log('adjacentStatus of [' + rowInd + '][' + colInd + '] set to: ', adjacentStatus);
+    // console.log('adjacentStatus of [' + rowInd + '][' + colInd + '] set to: ', adjacentStatus);
     // Base Case: There are no more cells to check
     if (adjacentStatus.end) {
       breakFlag = true;
@@ -40,37 +40,37 @@ var gameOfLife = function(board) {
     var toggleCell = false;
     // if the cell is live
     if (cellState === 1) {
-      console.log('live cell [' + rowInd + '][' + colInd + '] handled!');
+      // console.log('live cell [' + rowInd + '][' + colInd + '] handled!');
       // if adjacentStatus.live is < 2 or > 3
       if (adjacentStatus.live < 2 || adjacentStatus.live > 3) {
         // set toggleCell to true
         toggleCell = true;
       }
       board[rowInd][colInd] = 4
-      console.log('cell [' + rowInd + '][' + colInd + '] contents temp set to 4');
+      // console.log('cell [' + rowInd + '][' + colInd + '] contents temp set to 4');
     }
     // if the cell is dead
     if (cellState === 0) {
-      console.log('dead cell [' + rowInd + '][' + colInd + '] handled!');
+      // console.log('dead cell [' + rowInd + '][' + colInd + '] handled!');
       // if adjacentStatus.live is 3
       if (adjacentStatus.live === 3) {
         // toggleCell = true
         toggleCell = true;
       }
       board[rowInd][colInd] = 3
-      console.log('cell contents [' + rowInd + '][' + colInd + '] temp set to 3');
+      // console.log('cell contents [' + rowInd + '][' + colInd + '] temp set to 3');
     }
     for (var i = 0; i < board.length; i++) {
-      console.log(board[i]);
+      // console.log(board[i]);
     }
     // CYA Flag:
     maxIterations--;
     // recurse over adjacent cells
-    if (!breakFlag && board[rowInd][colInd + 1] !== undefined) { console.log('recursion for row, board[rowInd][colInd + 1]'); boardWalker(rowInd, colInd + 1); }
-    if (!breakFlag && board[rowInd + 1] && board[rowInd + 1][colInd] !== undefined) { console.log('recursion for board[rowInd + 1][colInd]'); boardWalker(rowInd + 1, colInd); }
-    if (!breakFlag && board[rowInd][colInd - 1] !== undefined) { console.log('recursion for board[rowInd][colInd - 1]'); boardWalker(rowInd, colInd - 1); }
-    if (!breakFlag && board[rowInd - 1] && board[rowInd - 1][colInd] !== undefined) { console.log('recursion for board[rowInd - 1][colInd]'); boardWalker(rowInd - 1, colInd); }
-    console.log('setting cell value [' + rowInd + '][' + colInd + '] on the way back up, toggleCell is: ', toggleCell);
+    if (!breakFlag && board[rowInd][colInd + 1] !== undefined) { /*console.log('recursion for row, board[rowInd][colInd + 1]');*/ boardWalker(rowInd, colInd + 1); }
+    if (!breakFlag && board[rowInd + 1] && board[rowInd + 1][colInd] !== undefined) { /*console.log('recursion for board[rowInd + 1][colInd]');*/ boardWalker(rowInd + 1, colInd); }
+    if (!breakFlag && board[rowInd][colInd - 1] !== undefined) { /*console.log('recursion for board[rowInd][colInd - 1]');*/ boardWalker(rowInd, colInd - 1); }
+    if (!breakFlag && board[rowInd - 1] && board[rowInd - 1][colInd] !== undefined) { /*console.log('recursion for board[rowInd - 1][colInd]');*/ boardWalker(rowInd - 1, colInd); }
+    // console.log('setting cell value [' + rowInd + '][' + colInd + '] on the way back up, toggleCell is: ', toggleCell);
     // if toggleCell
     if (toggleCell) {
       // if cell state was 1
@@ -204,6 +204,15 @@ function makeBoard(m, n, optionalArr) {
     for (var i = 0; i < board.container.length; i++) {
       console.log(board.container[i]);
     }
+    console.log('-------------------------------------');
+  };
+  board.runGame = function(game, turnCount) {
+    console.log('-----------Starting State------------'); 
+    this.print();
+    for (var i = turnCount; i > 0; i--) {
+      game(this.container);
+      this.print();
+    }
   };
   return board;
-}
+};
