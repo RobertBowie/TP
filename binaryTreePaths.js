@@ -24,6 +24,25 @@ All root-to-leaf paths are:
  * @param {TreeNode} root
  * @return {string[]}
  */
-var binaryTreePaths = function(root) {
 
+var binaryTreePaths = function(root) {
+  var allPaths = [];
+  function treeWalker(node, pathSoFar){
+    var path = pathSoFar || '';
+    // if we are on a leaf return the path
+    if (!node.left && !node.right) {
+      path += node.val;
+      allPaths.push(path);
+      return;
+    }
+    path += node.val + ' -> ';
+    if (node.left) {
+      treeWalker(node.left, path);
+    }
+    if (node.right) {
+      treeWalker(node.right, path);
+    }
+  }
+  treeWalker(root);
+  return allPaths;
 };
