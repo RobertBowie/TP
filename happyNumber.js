@@ -18,5 +18,36 @@ Example: 19 is a happy number
  * @return {boolean}
  */
 var isHappy = function(n) {
-  
+  var progress = {};
+  var sqSum;
+  var parts = [];
+  splitN(n);
+  while (sqSum !== 1) {
+    if (sqSum in progress && progress[sqSum] > 1) { return false; }
+    if (parts.length === 0) {
+      splitN(sqSum);
+    }
+    sqSum = parts.reduce(function(prev, curr) {
+      return (prev + curr * curr);
+    });
+    if (!(sqSum in progress)) {
+      progress[sqSum] = 1;
+    } else {
+      progress[sqSum] += 1;
+    }
+    parts = [];
+  }
+
+
+  return true;
+  // helper
+  function splitN(n) {
+    while (n) {
+      parts.push(n % 10);
+      n = Math.floor(n / 10);
+    }
+  };
 };
+
+console.log(isHappy(970));
+console.log(isHappy(975));
