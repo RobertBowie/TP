@@ -14,5 +14,10 @@ Return the sum of the three integers. You may assume that each input would have 
  */
 
 var threeSumClosest = function(nums, target) {
-  
+  // var to store all sums
+
+  // calculate all sums
+
+  // calculate the sum closest to the target and return it
+
 };
