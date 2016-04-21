@@ -15,9 +15,24 @@ Return the sum of the three integers. You may assume that each input would have 
 
 var threeSumClosest = function(nums, target) {
   // var to store all sums
-
+  var sums = [];
+  var closestSum;
+  var smallestDiff = Number.POSITIVE_INFINITY;
   // calculate all sums
-
+  for (var i = 0; i < nums.length - 2; i++) {
+    for (var j = i + 1; j < nums.length - 1; j++) {
+      sums.push(nums[i] + nums[j] + nums[j + 1]);
+    }
+  }
   // calculate the sum closest to the target and return it
-
+  sums.forEach(function(sum) {
+    var currDiff = target - sum;
+    if (currDiff < smallestDiff) {
+      closestSum = sum;
+      smallestDiff = currDiff;
+    }
+  });
+  return closestSum;
 };
+
+console.log(threeSumClosest([-1, 2, 1, -4], 1));
