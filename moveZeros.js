@@ -25,3 +25,30 @@ var moveZeroes = function(nums) {
 var nums = [0, 1, 0, 3, 12];
 moveZeroes(nums);
 console.log(nums) // [1, 3, 12, 0, 0]
+
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+// Solve without using any array prototype methods:
+var moveZeroes = function(nums) {
+  // iterate through nums
+  for (var i = 0; i < nums.length; i++) {
+    // if num is 0
+    if (nums[i] === 0) {
+      // perform pairwise swaps until the 0 is at the end
+      for (var j = i; j < nums.length - 1; j++) {
+        if (nums[j + 1] === 0) { continue; }
+        nums[j] = nums[j + 1];
+        nums[j + 1] = 0;
+        console.log(nums);
+      }
+    }
+  }
+};
+
+
+// Test:
+var nums = [0, 1, 0, 3, 12];
+moveZeroes(nums);
+console.log(nums) // [1, 3, 12, 0, 0]
