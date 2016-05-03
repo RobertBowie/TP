@@ -13,7 +13,11 @@ Minimize the total number of operations.
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var moveZeroes = function(nums) {
-  
+  nums.forEach(function(number, i, arr) {
+    if (number === 0) {
+      arr.push(arr.splice(i, 1)[0]);
+    }
+  });
 };
 
 
