@@ -18,5 +18,30 @@ convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
  * @return {string}
  */
 var convert = function(s, numRows) {
-  
+  var counter = 0;
+  // create a matrix
+  var zigzagMatrix = [];
+  for (var i = numRows; i > 0; i--) {
+    zigzagMatrix.push([]);
+  }
+  // iterate through string s
+  for (var i = 0; i < s.length; i++) {
+    if (counter < numRows) {
+      // populate matrix
+      zigzagMatrix[counter].push(s[i]);
+      counter++;
+    } else {
+      counter -= 2;
+      zigzagMatrix[counter].push(s[i]);
+      counter--;
+    }
+  }
+  console.log(zigzagMatrix);
+  // return re-ordered items
+  return zigzagMatrix.map(function(arr) {
+    return arr.join('');
+  }).join('');
 };
+
+// Test:
+console.log(convert("PAYPALISHIRING", 3)); // PAHNAPLSIIGYIR
