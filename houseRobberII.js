@@ -18,5 +18,35 @@ can rob tonight without alerting the police.
  * @return {number}
  */
 var rob = function(nums) {
-  
+  // Use the same system from house robber I
+
+  // if nums is uneven
+
+    // set iterations = nums.length - 1;
+
+  // else
+
+    // set iterations = nums.length
+
+  // iterate through nums, iterations times
+
+    // track temp = larger of with and without
+
+    // set with = without + nums[i]
+
+    // set without = temp
+
+  // return larger of with and without
+
 };
+
+// Test:
+
+var houses1 = [5, 5, 10, 40, 50, 35, 20];
+console.log(rob(houses1)); // 80
+
+var houses2 = [1, 2, 3, 4, 5];
+console.log(rob(houses2)); // 6
+
+var houses3 = [2, 6, 4, 8];
+console.log(rob(houses3)); // 14
