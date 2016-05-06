@@ -19,25 +19,30 @@ can rob tonight without alerting the police.
  */
 var rob = function(nums) {
   // Use the same system from house robber I
-
+  var withPrev = nums[0];
+  var without = 0;
+  var temp;
+  var numHouses = nums.length;
+  var iterations;
   // if nums is uneven
-
+  if (numHouses % 2 !== 0) {
     // set iterations = nums.length - 1;
-
-  // else
-
+    iterations = numHouses - 1;
+  } else { // else
     // set iterations = nums.length
-
+    iterations = numHouses;
+  }
   // iterate through nums, iterations times
-
+  for (i = 1; i < iterations; i++) {
     // track temp = larger of with and without
-
+    temp = Math.max(withPrev, without);
     // set with = without + nums[i]
-
+    withPrev = without + nums[i];
     // set without = temp
-
+    without = temp;
+  }
   // return larger of with and without
-
+  return Math.max(withPrev, without);
 };
 
 // Test:
