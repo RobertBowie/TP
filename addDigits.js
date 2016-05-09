@@ -12,25 +12,27 @@ Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one
  */
 var addDigits = function(num) {
   // in most cases the num % 9 is the digital root of num
-
   // edge cases:
   // num === 0
-
+  if (num === 0) {
     // return 0
-
+    return 0;
+  }
+  modNine = num % 9;
   // num % 9 === 0
-
+  if (modNine === 0) {
     // return 9
-
+    return 9;
+  }
   // return num % 9
-
+  return modNine;
 };
 
 // Test:
-console.log(addDigits(38));
+console.log(addDigits(38)); // 11 -> 2
+console.log(addDigits(10)); // 10 -> 1
+console.log(addDigits(11)); // 2
 /*
-10 -> 1
-11 -> 2
 12 -> 3
 13 -> 4
 14 -> 5
@@ -41,8 +43,10 @@ console.log(addDigits(38));
 21 -> 3
 //...
 27 -> 9
-28 -> 10 -> 1
-29 -> 11 -> 2
+*/
+console.log(addDigits(28)); // 10 -> 1
+console.log(addDigits(29)); // 11 -> 2
+/*
 30 -> 3
 31 -> 4
 //...
@@ -62,7 +66,7 @@ console.log(addDigits(38));
 111 -> 3
 
 118 -> 10 -> 1
-
-2456 -> 17 -> 8
-54729 -> 27 -> 9
 */
+
+console.log(addDigits(2456)); // 17 -> 8
+console.log(addDigits(54729)); // 27 -> 9
