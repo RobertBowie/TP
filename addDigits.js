@@ -11,17 +11,19 @@ Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one
  * @return {number}
  */
 var addDigits = function(num) {
-  // turn num into a string then an array of digits
-  var digitArray = ('' + num).split('');
-  if (digitArray.length > 1) {
-    sum = digitArray.reduce(function(prev, curr) {
-      return +prev + +curr;
-    });
-  }
-  if (sum > 9) {
-    addDigits(sum);
-  }
-  return sum;
+  // in most cases the num % 9 is the digital root of num
+
+  // edge cases:
+  // num === 0
+
+    // return 0
+
+  // num % 9 === 0
+
+    // return 9
+
+  // return num % 9
+
 };
 
 // Test:
