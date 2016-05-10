@@ -15,7 +15,27 @@ Merge two sorted linked lists and return it as a new list. The new list should b
  * @return {ListNode}
  */
 var mergeTwoLists = function(l1, l2) {
-  
+  var mergedList;
+
+  function listWalker(l1, l2) {
+    // base case: we have exhausted both lists
+    if (l1 === null && l2 === null) {
+      return;
+    }
+    // if we still have l1 items
+
+      // add one to mergedList
+
+    // if we still have l2 items
+
+      // add one to mergedList
+
+    // recurse sending through l1.next and l2.next or null
+    
+  };
+
+  return mergedList;
+
 };
 
 // Test:
