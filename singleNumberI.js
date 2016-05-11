@@ -10,24 +10,15 @@ Your algorithm should have a linear runtime complexity. Could you implement it w
  * @return {number}
  */
 var singleNumber = function(nums) {
-  // naive solution (uses extra memory)
-  var numFreq = {};
-  // build an object containing freq
-  nums.forEach(function(num) {
-    if (num in numFreq) {
-      numFreq[num]++;
+  var sortedNums = nums.sort(function(a, b) { return a - b; });
+  var result;
+  while (sortedNums.length) {
+    result = sortedNums.shift();
+    if (result !== sortedNums[0]) {
+      return result;
     } else {
-      numFreq[num] = 1;
+      sortedNums.shift();
     }
-    // remove anything that occurs twice, leaving numFreq with our result
-    if (numFreq[num] === 2) {
-      delete numFreq[num];
-    }
-  });
-  // return the single occurrence
-  for (num in numFreq) {
-    // coerce string num into a number
-    return +num;
   }
 };
 
