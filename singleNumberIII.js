@@ -16,5 +16,16 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
  * @return {number[]}
  */
 var singleNumber = function(nums) {
-  
+  // sort nums into sortedNums
+
+  // shift off numbers and store unique numbers in results until results.length is 2
+
 };
+
+// Test:
+
+var test1 = [1, 2, 1, 3, 2, 5];
+console.log(singleNumber(test1)); // [3, 5]
+
+var test2 = [3, 4, 7, 4, 9, 3, 2, 2];
+console.log(singleNumber(test2)); // [7, 9]
