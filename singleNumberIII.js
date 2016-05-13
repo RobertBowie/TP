@@ -16,17 +16,17 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
  * @return {number[]}
  */
 var singleNumber = function(nums) {
-  // sort nums into sortedNums
-  var sortedNums = nums.sort(function(a, b) { return a - b; });
+  // sort nums into sortedNums -> changed to nums to limit space complexity
+  nums = nums.sort(function(a, b) { return a - b; });
   // shift off numbers and store unique numbers in results until results.length is 2
   var result = [];
   var num;
   while (result.length < 2) {
-    num = sortedNums.shift();
-    if (num !== sortedNums[0]) {
+    num = nums.shift();
+    if (num !== nums[0]) {
       result.push(num);
     } else {
-      sortedNums.shift();
+      nums.shift();
     }
   }
   return result;
@@ -39,3 +39,6 @@ console.log(singleNumber(test1)); // [3, 5]
 
 var test2 = [3, 4, 7, 4, 9, 3, 2, 2];
 console.log(singleNumber(test2)); // [7, 9]
+
+var test3 = [1, 2];
+console.log(singleNumber(test3)); // [1, 2]
