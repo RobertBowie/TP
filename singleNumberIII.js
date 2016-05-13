@@ -17,9 +17,19 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
  */
 var singleNumber = function(nums) {
   // sort nums into sortedNums
-
+  var sortedNums = nums.sort(function(a, b) { return a - b; });
   // shift off numbers and store unique numbers in results until results.length is 2
-
+  var result = [];
+  var num;
+  while (result.length < 2) {
+    num = sortedNums.shift();
+    if (num !== sortedNums[0]) {
+      result.push(num);
+    } else {
+      sortedNums.shift();
+    }
+  }
+  return result;
 };
 
 // Test:
