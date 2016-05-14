@@ -22,24 +22,7 @@ bulb. Find how many bulbs are on after n rounds.
  * @return {number}
  */
 var bulbSwitch = function(n) {
-  // build an array containing bulb state
-  var bulbStates = [];
-  for (var i = 0; i < n; i++) {
-    bulbStates.push(false);
-  }
-  // for n rounds
-  for (var j = 1; j <= n; j++) {
-    // toggle jth bulbs
-    for (var k = j - 1; k < n; k += j) {
-      bulbStates[k] = !bulbStates[k];
-    }
-  }
-
-  // return the count of true bulbs
-  return bulbStates.reduce(function(prev, curr) {
-    return curr ? prev + 1 : prev;
-  }, 0);
-
+  return Math.floor(Math.sqrt(n));
 };
 
 console.log(bulbSwitch(3)); // 1
