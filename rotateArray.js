@@ -13,5 +13,15 @@ Try to come up as many solutions as you can, there are at least 3 different ways
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var rotate = function(nums, k) {
-  // slice off the first k elements of nums and
+  // handle k larger than nums.length
+  if (k > nums.length) { k %= nums.length; }
+  // return the first k elements of nums appended to the end
+  return nums.concat(nums.splice(0, k));
 };
+
+// Test:
+var test1 = [1, 2, 3, 4, 5, 6, 7];
+console.log(rotate(test1, 4)); // [5,6,7,1,2,3,4]
+
+var test2 = [1, 2, 3];
+console.log(rotate(test2, 7));
