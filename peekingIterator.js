@@ -21,11 +21,26 @@ Iterator.prototype = {
   next: function() {
     return this.arr.shift();
   },
-  hasNext() {
+  hasNext: function() {
     return this.arr.length > 0;
   }
-}
+};
+
+function PeekingIterator(arr) {
+  Iterator.call(this, arr);
+  this.arr = arr;
+};
+
+PeekingIterator.prototype = Object.create(Iterator.prototype);
+PeekingIterator.prototype.constructor = PeekingIterator;
+PeekingIterator.prototype.peek = function() {
+  return this.arr[0];
+};
+
+// Test:
 
 var testArr = [1, 2, 3];
-var testIterator = new Iterator(testArr);
-console.log(testIterator.next(), testIterator.next(), testIterator.hasNext(), testIterator.next(), testIterator.hasNext());
+// var testIterator = new Iterator(testArr);
+// console.log(testIterator.next());
+var testPeeker = new PeekingIterator(testArr);
+console.log(testPeeker.next(), testPeeker.peek(), testPeeker.next(), testPeeker.next(), testPeeker.hasNext());
