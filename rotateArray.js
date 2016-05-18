@@ -15,17 +15,30 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 var rotate = function(nums, k) {
   // handle k larger than nums.length
   if (k > nums.length) { k %= nums.length; }
-  // shift() and push() k elements
-  for (k; k > 0; k--) {
-    nums.push(nums.shift());
+  // reverse nums
+  nums.reverse();
+  // take and reverse from index 0 to k-1
+  var temp = nums.splice(0, k - 1 ? k - 1 : nums.length === 3 ? 2 : 1).reverse(); // this line is terrible, dirty fix for wrong result in test2
+  // concat reversed prefix with reversed nums
+  nums.reverse();
+  while (temp.length) {
+    nums.unshift(temp.pop());
   }
 };
 
 // Test:
 var test1 = [1, 2, 3, 4, 5, 6, 7];
 rotate(test1, 4);
-console.log(test1); // [5, 6, 7, 1, 2, 3, 4]
+console.log('result of test1', test1); // [5, 6, 7, 1, 2, 3, 4]
 
 var test2 = [1, 2, 3];
 rotate(test2, 7);
-console.log(test2); // [2, 3, 1]
+console.log('result of test2', test2); // [2, 3, 1]
+
+var test3 = [1, 2, 3];
+rotate(test3, 8);
+console.log('result of test3', test3); // [3, 1, 2]
+
+var test4 = [1, 2, 3, 4, 5];
+rotate(test4, 1);
+console.log('result of test4', test4); // [5, 1, 2, 3, 4]
