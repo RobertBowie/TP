@@ -13,5 +13,19 @@ You call next() the final time and it returns 3, the last element. Calling hasNe
 */
 
 function Iterator(arr) {
-
+  this.arr = arr;
 };
+
+Iterator.prototype = {
+  constructor: Iterator,
+  next: function() {
+    return this.arr.shift();
+  },
+  hasNext() {
+    return this.arr.length > 0;
+  }
+}
+
+var testArr = [1, 2, 3];
+var testIterator = new Iterator(testArr);
+console.log(testIterator.next(), testIterator.next(), testIterator.hasNext(), testIterator.next(), testIterator.hasNext());
