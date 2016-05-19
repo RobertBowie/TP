@@ -15,22 +15,28 @@ The result can be in any order.
  * @return {number[]}
  */
 var intersection = function(nums1, nums2) {
-  // assuming the intersection is index sensitive:
+  // assuming the intersection is NOT index sensitive:
   var results = [];
-  // for each element of one array
-  for (var i = 0; i < nums1.length; i++) {
-    if (nums1[i] === undefined || nums2[i] === undefined) { break; }
-    // if the corresponding element in the other array is ===
-    if (nums1[i] === nums2[i]) {
-      // push into results
-      results.push(nums1[i]);
+  var numSet1 = {};
+  var numSet2 = {};
+  // for each element of each array
+    // populate numSet
+  nums1.forEach( num => numSet1[num] = true );
+  nums2.forEach( num => numSet2[num] = true );
+  // add intersecting keys into results as numbers
+  for (var key1 in numSet1) {
+    if (key1 in numSet2) {
+      results.push(+key1);
     }
   }
-
   return results;
 };
 
 // Test:
 var test1a = [1, 2, 2, 1];
 var test1b = [2, 2];
-console.log(intersection(test1a, test1b));
+console.log(intersection(test1a, test1b)); // [2]
+
+var test2a = [1, 2];
+var test2b = [2, 1];
+console.log(intersection(test2a, test2b)); // [1, 2]
