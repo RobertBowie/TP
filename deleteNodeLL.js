@@ -19,5 +19,21 @@ after calling your function.
  * @return {void} Do not return anything, modify node in-place instead.
  */
 var deleteNode = function(node) {
-  
+  // if there is a next value
+  if (node.next !== null) {
+    // overwrite curr value with next
+    node.val = node.next.val;
+    node.next = node.next.next;
+  }
 };
+
+// Test:
+function ListNode(val) {
+  this.val = val;
+  this.next = null;
+};
+
+var testList = new ListNode(0);
+testList.next = new ListNode(1);
+deleteNode(testList);
+console.log(testList);
