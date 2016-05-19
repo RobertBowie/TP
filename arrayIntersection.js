@@ -15,5 +15,22 @@ The result can be in any order.
  * @return {number[]}
  */
 var intersection = function(nums1, nums2) {
-  
+  // assuming the intersection is index sensitive:
+  var results = [];
+  // for each element of one array
+  for (var i = 0; i < nums1.length; i++) {
+    if (nums1[i] === undefined || nums2[i] === undefined) { break; }
+    // if the corresponding element in the other array is ===
+    if (nums1[i] === nums2[i]) {
+      // push into results
+      results.push(nums1[i]);
+    }
+  }
+
+  return results;
 };
+
+// Test:
+var test1a = [1, 2, 2, 1];
+var test1b = [2, 2];
+console.log(intersection(test1a, test1b));
