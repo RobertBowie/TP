@@ -31,7 +31,7 @@
 var invertTree = function(root) {
   // Base case:
   if (root.right === null && root.left === null) {
-    return;
+    return root;
   }
   var temp = root.right
   root.right = root.left;
@@ -52,12 +52,12 @@ function TreeNode(val) {
 };
 
 var testTree = new TreeNode(4);
-testTree.left = new TreeNode(2);
-testTree.right = new TreeNode(7);
-testTree.left.left = new TreeNode(1);
-testTree.left.right = new TreeNode(3);
-testTree.right.left = new TreeNode(6);
-testTree.right.right = new TreeNode(9);
+// testTree.left = new TreeNode(2);
+// testTree.right = new TreeNode(7);
+// testTree.left.left = new TreeNode(1);
+// testTree.left.right = new TreeNode(3);
+// testTree.right.left = new TreeNode(6);
+// testTree.right.right = new TreeNode(9);
 
 console.log(testTree);
 console.log('----------');
