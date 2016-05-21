@@ -17,24 +17,29 @@ BST = function () {
 
 BST.prototype = {
   constructor: BST,
-  lookup: function (val) {
-    // recurse through the tree and return the node with val (or false?)
+  lookup: function (val, node) {
+    // recurse through the tree and return true or false
+    node = node === undefined ? this.root : node;
     // if root !== null
-
-      // if root.val === val 
-
-        // return (node || true)
-
-      // else
-
+    if (node !== null) {
+      // if root.val === val
+      if (node.val === val) {
+        // return true
+        return true;
+      } else { // else
         // if val < root.val
-
+        if (val < node.val) {
           // check the left subtree
-
+          return this.lookup(val, node.left);
+        }
         // if val > root.val
-
+        if (val > node.val) {
           // check the right subtree
-
+          return this.lookup(val, node.right);
+        }
+      }
+    }
+    return false;
   },
   insert: function (val, node) {
     // check where to insert and make a new TreeNode there
@@ -91,3 +96,6 @@ testBST.insert(6);
 console.log(testBST); // {root: {val: 5, right: {val: 6, left: null, right: null}, left: {val: 4, left: null, right: null}}}
 testBST.insert(7);
 console.log(testBST.root.right); // {val: 6, right: {val: 7, left: null, right: null}, left: null}
+console.log(testBST.lookup(7)); // true
+console.log(testBST.lookup(4)); // true
+console.log(testBST.lookup(10)); // false
