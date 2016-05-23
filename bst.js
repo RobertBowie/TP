@@ -80,8 +80,14 @@ BST.prototype = {
       }
     }
   },
-  delete: function (val) {
-    // use lookup to find if val is in tree and delete
+  delete: function (val, node) {
+    node = node || this.root;
+    if (node === null) { return; }
+    if (node.val === val) {
+      // handle deletion
+    } else {
+      // recurse left and right
+    }
   }
 }
 
@@ -99,3 +105,5 @@ console.log(testBST.root.right); // {val: 6, right: {val: 7, left: null, right: 
 console.log(testBST.lookup(7)); // true
 console.log(testBST.lookup(4)); // true
 console.log(testBST.lookup(10)); // false
+testBST.delete(7);
+console.log(testBST.lookup(7)); //false
