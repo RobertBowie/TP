@@ -81,7 +81,7 @@ BST.prototype = {
     }
   },
   delete: function (val, node, parent) {
-    node = node || this.root;
+    node = node === undefined ? this.root : node;
     var currVal = node.val;
     if (node === null) { return; }
     // if root is the only value and is to be deleted
@@ -92,6 +92,8 @@ BST.prototype = {
         // set the node's link from parent to null
         if (currVal < parent.val) { parent.left = null; }
         if (currVal > parent.val) { parent.right = null; }
+        // if parent.val === currVal we are mid delete and should set parent.right
+        if (currVal === parent.val) { parent.right = null; }
       } else if (node.right !== null && node.left === null) { // if the node to delete has only right child
         // set the node's link from parent to right child
         if (currVal < parent.val) { parent.left = node.right; }
@@ -100,11 +102,12 @@ BST.prototype = {
         // set the node's link from parent to left child
         if (currVal < parent.val) { parent.left = node.left; }
         if (currVal > parent.val) { parent.right = node.left; }
-      } else if (false) { // if the node has two children
-        // overwrite the currVal with the min val in the right subtree
-
+      } else if (node.left && node.right) { // if the node has two children
+        // overwrite the current node val with the min val in the right subtree
+        var min = this.findMin(node.right);
+        node.val = min;
         // delete the min val
-
+        this.delete(min, node.right, node);
       }
     } else {
       // recurse left or right
@@ -115,25 +118,56 @@ BST.prototype = {
         this.delete(val, node.right, node);
       }
     }
+  },
+  findMin: function(node) {
+    // base case:
+    if (node.left === null) { return node.val; }
+    // recurse:
+    return this.findMin(node.left);
+  },
+  print: function() {
+    console.log(this.root);
   }
 }
 
+/*
+       5
+      / \
+     4   7
+    /   / \
+   3   6   8
+*/
+
 // Test:
 var testBST = new BST;
-// console.log(testBST); // {root: null}
 testBST.insert(5);
-// console.log(testBST); // {root: {val: 5, right: null, left: null}}
 testBST.insert(4);
-// console.log(testBST); // {root: {val: 5, right: null, left: {val: 4, left: null, right: null}}}
 testBST.insert(3);
-testBST.insert(6);
-// console.log(testBST); // {root: {val: 5, right: {val: 6, left: null, right: null}, left: {val: 4, left: null, right: null}}}
 testBST.insert(7);
-// console.log(testBST.root.right); // {val: 6, right: {val: 7, left: null, right: null}, left: null}
-// console.log(testBST.lookup(7)); // true
-// console.log(testBST.lookup(4)); // true
-// console.log(testBST.lookup(10)); // false
-testBST.delete(4);
-testBST.delete(6);
-console.log(testBST.lookup(4)); //false
-console.log(testBST);
+testBST.insert(8);
+testBST.insert(6);
+testBST.delete(7);
+// testBST.print();
+
+
+/*
+                10
+               /  \
+              5    15
+             / \   / \
+            3   6 13 20
+                 /   /
+                12  18
+*/
+var test2 = new BST;
+test2.insert(10);
+test2.insert(5);
+test2.insert(15);
+test2.insert(3);
+test2.insert(6);
+test2.insert(13);
+test2.insert(20);
+test2.insert(12);
+test2.insert(18);
+test2.delete(15);
+test2.print();
