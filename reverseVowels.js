@@ -18,41 +18,26 @@ var reverseVowels = function(s) {
   var endIndex = s.length - 1;
   var result = '';
   var singleVowel;
-  // Iterate through the string:
   for (var i = 0; i < s.length; i++) {
-    // Handle second half of the vowel swap:
     if (i in startVowels) {
       result += startVowels[i];
-      console.log('added ', startVowels[i], ' to result');
       continue;
     }
-    // Once we encounter a vowel:
     if (s[i] in vowels) {
       singleVowel = true;
-      console.log('s[i] is a vowel: ', s[i]);
-      // Iterate through the string in reverse:
       for (var j = endIndex; j > i; j--) {
-        // because we are looking at the second half we know the prior vowel is not dead middle
-        // Once we encounter another vowel:
         if (s[j] in vowels) {
-        console.log('s[j] is a vowel: ', s[j]);
-          // Store and swap the vowels
           startVowels[j] = s[i];
-          console.log(startVowels);
           result += s[j];
           singleVowel = false;
-          // Update the endIndex:
           endIndex = j - 1;
           break;
         }
       }
-
-      // add a vowel that can't be swapped to result
       if (singleVowel) {
         result += s[i];
       }
-    } else { // Not a vowel, add to result:
-      console.log('adding ', s[i], ' to result');
+    } else {
       result += s[i];
     }
   }
@@ -63,14 +48,14 @@ var reverseVowels = function(s) {
 // Test:
 
 var test1 = "hello";
-console.log(reverseVowels(test1));
+console.log(reverseVowels(test1)); // holle
 var test2 = "leetcode";
-console.log(reverseVowels(test2));
+console.log(reverseVowels(test2)); // leotcede
 var test3 = "abcde";
-console.log(reverseVowels(test3));
+console.log(reverseVowels(test3)); // ebcda
 var test4 = "aeiou";
-console.log(reverseVowels(test4));
+console.log(reverseVowels(test4)); // uoiea
 var test5 = "e.";
-console.log(reverseVowels(test5));
+console.log(reverseVowels(test5)); // e.
 var test6 = "uaAU";
-console.log(reverseVowels(test6));
+console.log(reverseVowels(test6)); // UAau
