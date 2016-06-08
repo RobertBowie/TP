@@ -15,10 +15,7 @@ var reverse = function(x) {
     result += '-';
     x = Math.abs(x);
   }
-  while (x) {
-    result += x % 10;
-    x = Math.floor(x / 10);
-  }
+  result += ('' + x).split('').reverse().join('');
   return +result;
 };
 
