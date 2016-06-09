@@ -34,11 +34,48 @@ Board.prototype = {
     this.board[row][col] = char;
   }
 }
-// 1 x ? snake
 
-// snake grows 1 every food eaten
+// 1 x ? snake, represented by 2 in the matrix
+function Snake() {
+  this.currDir = 'n';
+  // snake grows 1 every food eaten
 
-// snake dies if it hits walls (oob) or itself
+  // snake dies if it hits walls (oob) or itself
+
+}
+
+Snake.prototype = {
+  constructor: Snake,
+  move: function() {
+    // extend head a space in the current direction
+
+    // remove tail from current space
+
+  },
+  grow: function() {
+    // like move but don't remove the tail
+
+  },
+  die: function() {
+    // what happens when the snake dies?  game over
+
+  },
+  decide: function(row, col) {
+    // based on next cell to encounter
+
+    // if clear
+
+      // move there
+
+    // if snake (2) or wall (undefined)
+
+      // die
+
+    // if food (1)
+
+      // grow
+  }
+}
 
 // tick based updates - snake moves one square per tick
 
