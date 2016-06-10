@@ -33,6 +33,22 @@ Board.prototype = {
   },
   setSpace: function(coordArr, char) {
     this.board[coordArr[0]][coordArr[1]] = char;
+  },
+  getSpace: function(coordArr) {
+    return this.board[coordArr[0]][coordArr[1]];
+  },
+  startTicks: function() {
+    // tick based updates - snake moves one square per tick
+    this.tick = setInterval(function() {
+      game1.snake.decide();
+      game1.print();
+    }, 1000);
+  },
+  stopTicks: function() {
+    clearInterval(this.tick);
+  },
+  reset: function() {
+    globalInit();
   }
 }
 
@@ -62,24 +78,31 @@ Snake.prototype = {
   die: function() {
     // what happens when the snake dies?  game over
     console.warn('Game Over');
+    clearInterval(game1.tick);
   },
-  decide: function(row, col) {
+  decide: function() {
     // based on next cell to encounter
     var nextSpace = this.nextSpace();
+    if (nextSpace === null) { this.die(); console.log('ran into a wall and died'); return; }
+    var nextVal = game1.getSpace(nextSpace);
     // if clear
-    if (nextSpace === 0) {
+    if (nextVal === 0) {
       // move there
       this.move();
+      console.log('snake decided to move');
     }
-    // if snake (2) or wall (undefined)
-    if (nextSpace === 2 || nextSpace === null) {
+    // if snake (2)
+    if (nextVal === 2) {
       // die
       this.die();
+      console.log('snake decided to die');
     }
     // if food (1)
-    if (nextSpace === 1) {
+    if (nextVal === 1) {
       // grow
       this.grow();
+      console.log('snake decided to grow');
+      game1.addFood();
     }
   },
   hatch: function() {
@@ -98,11 +121,11 @@ Snake.prototype = {
       newLoc = [this.position[0][0] - 1, this.position[0][1]];
     }
     if (this.currDir === 'e') {
-      if (this.position[0][1] + 1 > board1.size - 1) { return null; }
+      if (this.position[0][1] + 1 > game1.size - 1) { return null; }
       newLoc = [this.position[0][0], this.position[0][1] + 1];
     }
     if (this.currDir === 's') {
-      if (this.position[0][0] + 1 > board1.size - 1) { return null; }
+      if (this.position[0][0] + 1 > game1.size - 1) { return null; }
       newLoc = [this.position[0][0] + 1, this.position[0][1]];
     }
     if (this.currDir === 'w') {
@@ -113,8 +136,12 @@ Snake.prototype = {
   }
 }
 
-// tick based updates - snake moves one square per tick
 
 // init
-var game1 = new Board(10);
-game1.snake.hatch();
+var game1;
+function globalInit() {
+  game1 = new Board(10);
+  game1.snake.hatch();
+  game1.addFood();
+  game1.print();
+};
