@@ -144,4 +144,17 @@ function globalInit() {
   game1.snake.hatch();
   game1.addFood();
   game1.print();
+  // add table
+  var playArea = document.getElementById('playArea');
+  playArea.innerHTML += '<table id="snakeBoard"></table>';
+  var snakeBoard = document.getElementById('snakeBoard');
+  var table = '';
+  for (var i = 0; i < game1.size; i++) {
+    var tableRow = '<tr>';
+    for (var j = 0; j < game1.size; j++) {
+      tableRow += '<td id="' + i + '.' + j + '">';
+    }
+    table += tableRow;
+  }
+  snakeBoard.innerHTML += table;
 };
