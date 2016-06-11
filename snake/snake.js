@@ -80,7 +80,7 @@ Snake.prototype = {
   die: function() {
     // what happens when the snake dies?  game over
     console.warn('Game Over');
-    clearInterval(game1.tick);
+    game1.stopTicks();
   },
   decide: function() {
     // based on next cell to encounter
@@ -170,7 +170,7 @@ function addHTML() {
   var button = document.createElement('button');
   button.innerHTML = 'Start';
   playArea.appendChild(button);
-  button.addEventListener('click', game1.startTicks);
+  button.addEventListener('click', game1.startTicks.bind(game1));
 };
 
 function markSpace(tuple, char) { //styles: snake, food
