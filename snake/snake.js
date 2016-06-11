@@ -1,4 +1,5 @@
-// 100 x 100 board
+window.onload = globalInit;
+
 function Board(size) {
   this.board = [];
   this.size = size;
@@ -140,6 +141,10 @@ Snake.prototype = {
 
 // init
 var game1;
+function printSomething() {
+  console.log('printSomething called');
+};
+
 function globalInit() {
   game1 = new Board(10);
   addHTML();
@@ -162,12 +167,45 @@ function addHTML() {
     table += tableRow;
   }
   snakeBoard.innerHTML += table;
+  var button = document.createElement('button');
+  button.innerHTML = 'Start';
+  playArea.appendChild(button);
+  button.addEventListener('click', game1.startTicks);
 };
 
 function markSpace(tuple, char) { //styles: snake, food
   var style = char === 1 ? 'food' : char === 2 ? 'snake' : 'blank';
   var space = document.getElementById('' + tuple[0] + '.' + tuple[1]);
-  space.classList.toggle(style);
-}
+  space.className = style;
+};
 
 // TODO: event listeners for arrow keys and start
+document.onkeydown = checkKey;
+function checkKey(e) {
+  e = e || window.event;
+  var currDir = game1.snake.currDir;
+  if (e.keyCode === 38) {
+      // up arrow
+      if (currDir !== 's') {
+        game1.snake.currDir = 'n';
+      }
+  }
+  else if (e.keyCode === 40) {
+      // down arrow
+      if (currDir !== 'n') {
+        game1.snake.currDir = 's';
+      }
+  }
+  else if (e.keyCode === 37) {
+     // left arrow
+     if (currDir !== 'e') {
+       game1.snake.currDir = 'w';
+     }
+  }
+  else if (e.keyCode === 39) {
+     // right arrow
+     if (currDir !== 'w') {
+       game1.snake.currDir = 'e';
+     }
+  }
+};
