@@ -50,6 +50,9 @@ Board.prototype = {
     clearInterval(this.tick);
   },
   reset: function() {
+    var playArea = document.getElementById('playArea');
+    this.stopTicks();
+    playArea.innerHTML = '';
     globalInit();
   }
 }
@@ -167,10 +170,20 @@ function addHTML() {
     table += tableRow;
   }
   snakeBoard.innerHTML += table;
-  var button = document.createElement('button');
-  button.innerHTML = 'Start';
-  playArea.appendChild(button);
-  button.addEventListener('click', game1.startTicks.bind(game1));
+
+  var buttonDiv = document.createElement('div');
+  buttonDiv.className = 'buttonDiv';
+  playArea.appendChild(buttonDiv);
+  var startButton = document.createElement('button');
+  startButton.className = 'btn';
+  startButton.innerHTML = 'Start';
+  buttonDiv.appendChild(startButton);
+  startButton.addEventListener('click', game1.startTicks.bind(game1));
+  var resetButton = document.createElement('button');
+  resetButton.className = 'btn';
+  resetButton.innerHTML = 'Reset';
+  buttonDiv.appendChild(resetButton);
+  resetButton.addEventListener('click', game1.reset.bind(game1));
 };
 
 function markSpace(tuple, char) { //styles: snake, food

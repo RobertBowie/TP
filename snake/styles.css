@@ -73,3 +73,32 @@ td {
 .blank {
   background-color: white;
 }
+.btn {
+  background: #a8a8a8;
+  background-image: -webkit-linear-gradient(top, #a8a8a8, #707070);
+  background-image: -moz-linear-gradient(top, #a8a8a8, #707070);
+  background-image: -ms-linear-gradient(top, #a8a8a8, #707070);
+  background-image: -o-linear-gradient(top, #a8a8a8, #707070);
+  background-image: linear-gradient(to bottom, #a8a8a8, #707070);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+.btn:hover {
+  background: #adadad;
+  background-image: -webkit-linear-gradient(top, #adadad, #383838);
+  background-image: -moz-linear-gradient(top, #adadad, #383838);
+  background-image: -ms-linear-gradient(top, #adadad, #383838);
+  background-image: -o-linear-gradient(top, #adadad, #383838);
+  background-image: linear-gradient(to bottom, #adadad, #383838);
+  text-decoration: none;
+}
+.buttonDiv {
+  text-align: center;
+  padding-top: 1em;
+}
