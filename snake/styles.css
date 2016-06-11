@@ -64,3 +64,12 @@ td {
   margin-right: auto;
   border: 1px solid blue;
 }
+.snake {
+  background-color: grey;
+}
+.food {
+  background-color: red;
+}
+.blank {
+  background-color: white;
+}

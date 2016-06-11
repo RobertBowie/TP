@@ -33,6 +33,7 @@ Board.prototype = {
   },
   setSpace: function(coordArr, char) {
     this.board[coordArr[0]][coordArr[1]] = char;
+    markSpace(coordArr, char);
   },
   getSpace: function(coordArr) {
     return this.board[coordArr[0]][coordArr[1]];
@@ -141,9 +142,13 @@ Snake.prototype = {
 var game1;
 function globalInit() {
   game1 = new Board(10);
+  addHTML();
   game1.snake.hatch();
   game1.addFood();
   game1.print();
+};
+
+function addHTML() {
   // add table
   var playArea = document.getElementById('playArea');
   playArea.innerHTML += '<table id="snakeBoard"></table>';
@@ -158,3 +163,11 @@ function globalInit() {
   }
   snakeBoard.innerHTML += table;
 };
+
+function markSpace(tuple, char) { //styles: snake, food
+  var style = char === 1 ? 'food' : char === 2 ? 'snake' : 'blank';
+  var space = document.getElementById('' + tuple[0] + '.' + tuple[1]);
+  space.classList.toggle(style);
+}
+
+// TODO: event listeners for arrow keys and start
