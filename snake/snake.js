@@ -4,6 +4,8 @@ function Board(size) {
   this.board = [];
   this.size = size;
   this.init(size);
+  this.score = 0;
+  this.interval = 1000;
 };
 
 Board.prototype = {
@@ -40,11 +42,13 @@ Board.prototype = {
     return this.board[coordArr[0]][coordArr[1]];
   },
   startTicks: function() {
+    this.score = 0;
     // tick based updates - snake moves one square per tick
     this.tick = setInterval(function() {
       game1.snake.decide();
       game1.print();
-    }, 1000);
+      updateScore();
+    }, this.interval);
   },
   stopTicks: function() {
     clearInterval(this.tick);
@@ -54,6 +58,18 @@ Board.prototype = {
     this.stopTicks();
     playArea.innerHTML = '';
     globalInit();
+  },
+  hardMode: function() {
+    var hardModeButton = document.getElementById('hrdBtn');
+    if (this.interval === 1000) {
+      this.interval = 500;
+      hardModeButton.className = 'btn hardModeOn';
+      console.log('set class hardModeOn', this.interval);
+    } else if (this.interval === 500) {
+      this.interval = 1000;
+      hardModeButton.className = 'btn';
+      console.log('removed class hardModeOn', this.interval);
+    }
   }
 }
 
@@ -74,10 +90,15 @@ Snake.prototype = {
     // extend head a space in the current direction
     this.position.unshift(nextSpace);
     game1.setSpace(nextSpace, 2);
+    game1.score++;
   },
   move: function() {
+    // find next space in current direction
+    var nextSpace = this.nextSpace();
+    // extend head a space in the current direction
+    this.position.unshift(nextSpace);
+    game1.setSpace(nextSpace, 2);
     // like grow but remove the tail
-    this.grow();
     game1.setSpace(this.position.pop(), 0);
   },
   die: function() {
@@ -154,6 +175,7 @@ function globalInit() {
   game1.snake.hatch();
   game1.addFood();
   game1.print();
+  updateScore();
 };
 
 function addHTML() {
@@ -184,6 +206,12 @@ function addHTML() {
   resetButton.innerHTML = 'Reset';
   buttonDiv.appendChild(resetButton);
   resetButton.addEventListener('click', game1.reset.bind(game1));
+  var hardModeButton = document.createElement('button');
+  hardModeButton.className = 'btn';
+  hardModeButton.id = 'hrdBtn';
+  hardModeButton.innerHTML = 'Hard Mode';
+  buttonDiv.appendChild(hardModeButton);
+  hardModeButton.addEventListener('click', game1.hardMode.bind(game1));
 };
 
 function markSpace(tuple, char) { //styles: snake, food
@@ -192,6 +220,10 @@ function markSpace(tuple, char) { //styles: snake, food
   space.className = style;
 };
 
+function updateScore() {
+  var scoreDiv = document.getElementById('score');
+  scoreDiv.innerHTML = 'Score: ' + game1.score;
+};
 // TODO: event listeners for arrow keys and start
 document.onkeydown = checkKey;
 function checkKey(e) {

@@ -65,7 +65,7 @@ td {
   border: 1px solid blue;
 }
 .snake {
-  background-color: grey;
+  background-color: green;
 }
 .food {
   background-color: red;
@@ -101,4 +101,17 @@ td {
 .buttonDiv {
   text-align: center;
   padding-top: 1em;
+}
+#score {
+  text-align: center;
+  position: relative;
+  top: 19em;
+}
+.hardModeOn {
+  background: #d93434;
+  background-image: -webkit-linear-gradient(top, #d93434, #2b0000);
+  background-image: -moz-linear-gradient(top, #d93434, #2b0000);
+  background-image: -ms-linear-gradient(top, #d93434, #2b0000);
+  background-image: -o-linear-gradient(top, #d93434, #2b0000);
+  background-image: linear-gradient(to bottom, #d93434, #2b0000);
 }
