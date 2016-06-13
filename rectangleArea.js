@@ -16,7 +16,6 @@ Assume that the total area is never beyond the maximum possible value of int.
  * @return {number}
  */
 var computeArea = function(A, B, C, D, E, F, G, H) {
-  function area(l, w) { return l * w; }
   var h1, w1, h2, w2, h3, w3, result, overlap;
   h1 = D - B;
   w1 = C - A;
@@ -24,8 +23,10 @@ var computeArea = function(A, B, C, D, E, F, G, H) {
   w2 = G - E;
   h3 = Math.min(D, H) - Math.max(B, F);
   w3 = Math.min(C, G) - Math.max(A, E);
-  result = area(h1, w1) + area(h2, w2);
+  result = h1 * w1 + h2 * w2;
   // B>=H or E>=C or F>=D or A>=G  >>> if any are true there is no overlap
   overlap = !(B >= H || E >= C || F >= D || A >= G);
-  return overlap ? result - area(h3, w3) : result;
+  return overlap ? result - h3 * w3 : result;
 };
+
+console.log(computeArea(0, 0, 0, 0, -1, -1, 1, 1));
