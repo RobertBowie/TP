@@ -64,11 +64,9 @@ Board.prototype = {
     if (this.interval === 1000) {
       this.interval = 500;
       hardModeButton.className = 'btn hardModeOn';
-      console.log('set class hardModeOn', this.interval);
     } else if (this.interval === 500) {
       this.interval = 1000;
       hardModeButton.className = 'btn';
-      console.log('removed class hardModeOn', this.interval);
     }
   }
 }
@@ -76,10 +74,8 @@ Board.prototype = {
 // 1 x ? snake, represented by 2 in the matrix
 function Snake() {
   this.currDir = 'n';
+  // TODO: dynamic initial position
   this.position = [[4, 4], [5, 4], [6, 4]];
-
-  // TODO: snake cannot double back on itself (eg. currDir cannot go from N to S)
-
 };
 
 Snake.prototype = {
@@ -102,7 +98,7 @@ Snake.prototype = {
     game1.setSpace(this.position.pop(), 0);
   },
   die: function() {
-    // what happens when the snake dies?  game over
+    // TODO: Add game over visual
     console.warn('Game Over');
     game1.stopTicks();
   },
@@ -113,31 +109,21 @@ Snake.prototype = {
     var nextVal = game1.getSpace(nextSpace);
     // if clear
     if (nextVal === 0) {
-      // move there
       this.move();
-      console.log('snake decided to move');
     }
     // if snake (2)
     if (nextVal === 2) {
-      // die
       this.die();
-      console.log('snake decided to die');
     }
     // if food (1)
     if (nextVal === 1) {
-      // grow
       this.grow();
-      console.log('snake decided to grow');
       game1.addFood();
     }
   },
   hatch: function() {
-    // TODO: make this dynamic based on board size
-
-    // by default we have a 3-long snake in the middle of the board
-    game1.setSpace([4, 4], 2);
-    game1.setSpace([5, 4], 2);
-    game1.setSpace([6, 4], 2);
+    // dynamic initial placement based on this.position
+    this.position.forEach( (tuple) => game1.setSpace(tuple, 2) );
   },
   nextSpace: function() {
     // based on currDir and where the head is at return a tuple for the next space
@@ -165,9 +151,6 @@ Snake.prototype = {
 
 // init
 var game1;
-function printSomething() {
-  console.log('printSomething called');
-};
 
 function globalInit() {
   game1 = new Board(10);
@@ -179,7 +162,6 @@ function globalInit() {
 };
 
 function addHTML() {
-  // add table
   var playArea = document.getElementById('playArea');
   playArea.innerHTML += '<table id="snakeBoard"></table>';
   var snakeBoard = document.getElementById('snakeBoard');
@@ -229,28 +211,24 @@ document.onkeydown = checkKey;
 function checkKey(e) {
   e = e || window.event;
   var currDir = game1.snake.currDir;
-  if (e.keyCode === 38) {
-      // up arrow
-      if (currDir !== 's') {
-        game1.snake.currDir = 'n';
-      }
+  if (e.keyCode === 38) { // up arrow
+    if (currDir !== 's') {
+      game1.snake.currDir = 'n';
+    }
   }
-  else if (e.keyCode === 40) {
-      // down arrow
-      if (currDir !== 'n') {
-        game1.snake.currDir = 's';
-      }
+  else if (e.keyCode === 40) { // down arrow
+    if (currDir !== 'n') {
+      game1.snake.currDir = 's';
+    }
   }
-  else if (e.keyCode === 37) {
-     // left arrow
-     if (currDir !== 'e') {
-       game1.snake.currDir = 'w';
-     }
+  else if (e.keyCode === 37) { // left arrow
+   if (currDir !== 'e') {
+     game1.snake.currDir = 'w';
+   }
   }
-  else if (e.keyCode === 39) {
-     // right arrow
-     if (currDir !== 'w') {
-       game1.snake.currDir = 'e';
-     }
+  else if (e.keyCode === 39) { // right arrow
+   if (currDir !== 'w') {
+     game1.snake.currDir = 'e';
+   }
   }
 };
