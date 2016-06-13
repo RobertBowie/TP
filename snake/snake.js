@@ -1,5 +1,7 @@
 window.onload = globalInit;
 
+// TODO: add pause functionality
+
 function Board(size) {
   this.board = [];
   this.size = size;
@@ -42,6 +44,7 @@ Board.prototype = {
     return this.board[coordArr[0]][coordArr[1]];
   },
   startTicks: function() {
+    debugger;
     this.score = 0;
     // tick based updates - snake moves one square per tick
     this.tick = setInterval(function() {
@@ -159,6 +162,7 @@ function globalInit() {
   game1.addFood();
   game1.print();
   updateScore();
+  document.onkeydown = checkKey;
 };
 
 function addHTML() {
@@ -174,26 +178,29 @@ function addHTML() {
     table += tableRow;
   }
   snakeBoard.innerHTML += table;
-
-  var buttonDiv = document.createElement('div');
-  buttonDiv.className = 'buttonDiv';
-  playArea.appendChild(buttonDiv);
-  var startButton = document.createElement('button');
-  startButton.className = 'btn';
-  startButton.innerHTML = 'Start';
-  buttonDiv.appendChild(startButton);
+  // Add buttons
+  var buttonDiv = addElement(playArea, 'div', 'buttonDiv');
+  var startButton = addElement(buttonDiv, 'button', 'btn', 'Start');
   startButton.addEventListener('click', game1.startTicks.bind(game1));
-  var resetButton = document.createElement('button');
-  resetButton.className = 'btn';
-  resetButton.innerHTML = 'Reset';
-  buttonDiv.appendChild(resetButton);
+  var resetButton = addElement(buttonDiv, 'button', 'btn', 'Reset');
   resetButton.addEventListener('click', game1.reset.bind(game1));
-  var hardModeButton = document.createElement('button');
-  hardModeButton.className = 'btn';
-  hardModeButton.id = 'hrdBtn';
-  hardModeButton.innerHTML = 'Hard Mode';
-  buttonDiv.appendChild(hardModeButton);
+  var hardModeButton = addElement(buttonDiv, 'button', 'btn', 'HardMode', 'hrdBtn');
   hardModeButton.addEventListener('click', game1.hardMode.bind(game1));
+};
+
+function addElement(appendTo, elementType, className, innerHTML, id) {
+  var element = document.createElement(elementType);
+  if (className !== undefined) {
+    element.className = className;
+  }
+  if (innerHTML !== undefined) {
+    element.innerHTML = innerHTML;
+  }
+  if (id !== undefined) {
+    element.id = id;
+  }
+  appendTo.appendChild(element);
+  return element;
 };
 
 function markSpace(tuple, char) { //styles: snake, food
@@ -206,8 +213,7 @@ function updateScore() {
   var scoreDiv = document.getElementById('score');
   scoreDiv.innerHTML = 'Score: ' + game1.score;
 };
-// TODO: event listeners for arrow keys and start
-document.onkeydown = checkKey;
+// Event listeners for arrow keys and start
 function checkKey(e) {
   e = e || window.event;
   var currDir = game1.snake.currDir;
@@ -215,20 +221,19 @@ function checkKey(e) {
     if (currDir !== 's') {
       game1.snake.currDir = 'n';
     }
-  }
-  else if (e.keyCode === 40) { // down arrow
+  } else if (e.keyCode === 40) { // down arrow
     if (currDir !== 'n') {
       game1.snake.currDir = 's';
     }
-  }
-  else if (e.keyCode === 37) { // left arrow
+  } else if (e.keyCode === 37) { // left arrow
    if (currDir !== 'e') {
      game1.snake.currDir = 'w';
    }
-  }
-  else if (e.keyCode === 39) { // right arrow
+  } else if (e.keyCode === 39) { // right arrow
    if (currDir !== 'w') {
      game1.snake.currDir = 'e';
    }
+  } else if (e.keyCode === 13) { // enter
+    game1.startTicks();
   }
 };

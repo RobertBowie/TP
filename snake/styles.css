@@ -115,3 +115,7 @@ td {
   background-image: -o-linear-gradient(top, #d93434, #2b0000);
   background-image: linear-gradient(to bottom, #d93434, #2b0000);
 }
+.hardModeOn:hover {
+  background: #2b0000;
+  text-decoration: none;
+}
