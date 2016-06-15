@@ -22,8 +22,22 @@ function reverseInGroups(listNode, k) {
   
 };
 
-function basicReverse(listNode) {
-
+function basicReverse(list) {
+  var listNode = list.head;
+  var nextNode = listNode.next;
+  var tempNode = listNode;
+  // for the 1st item set .next to null
+  listNode.next = null;
+  list.tail = listNode;
+  // for each subsequent item
+  while (nextNode) {
+    var loopTemp = nextNode.next;
+    // set .next to the previous item
+    nextNode.next = tempNode;
+    tempNode = nextNode;
+    nextNode = loopTemp;
+  }
+  list.head = tempNode;
 };
 
 // Test
@@ -96,7 +110,6 @@ LinkedList.prototype = {
     return temp.val;
   },
   print: function() {
-    // console.log the elements of the list
     var temp = this.head;
     while (temp !== null) {
       console.log(temp.val);
@@ -107,18 +120,12 @@ LinkedList.prototype = {
 // 1->2->3  >>>  3->2->1
 var simpleTest = new LinkedList();
 simpleTest.append(3);
-console.log(simpleTest);
 simpleTest.prepend(2);
-console.log(simpleTest);
 simpleTest.prepend(1);
-console.log(simpleTest);
+simpleTest.prepend(0);
+simpleTest.append(4);
 simpleTest.print();
-simpleTest.removeLast();
+basicReverse(simpleTest);
+console.log('---');
+simpleTest.print();
 console.log(simpleTest);
-simpleTest.removeLast();
-simpleTest.removeLast();
-simpleTest.removeFirst();
-// simpleTest.removeFirst();
-// console.log(simpleTest);
-// basicReverse(simpleTest);
-// simpleTest.print();
