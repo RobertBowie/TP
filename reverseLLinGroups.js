@@ -115,8 +115,21 @@ LinkedList.prototype = {
       console.log(temp.val);
       temp = temp.next;
     }
+  },
+  appendNode: function(node) {
+    this.size++;
+    if (!(node instanceof ListNode)) {
+    node = new ListNode(node);
+    }
+    if (this.head === null) {
+      this.head = this.tail = node;
+      return;
+    }
+    this.tail.next = node;
+    this.tail = this.tail.next;
   }
 }
+
 // 1->2->3  >>>  3->2->1
 var simpleTest = new LinkedList();
 simpleTest.append(3);
