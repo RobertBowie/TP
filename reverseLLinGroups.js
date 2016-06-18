@@ -18,8 +18,39 @@ Output:  5->4->3->2->1->8->7->6->NULL.
  * }
  */
 
+  // Possible strategy:
+
+  // create subsets of the LL as arrays of the values of each node
+  // reverse the arrays then build up the reversed LL segments 
+  // connect the segments
+
+  // Possible strategy: (in place)
+
+  // recurse over subsets of size k reversing each one
+  // return the head of each reversed subset
+
+
+
 function reverseInGroups(listNode, k) {
-  
+  var current = listNode;
+  var next = null;
+  var prev = null;
+  var count = 0;
+  // operating on subsets of size k
+  while (current !== null && count < k) {
+    // reverse subset
+    next = current.next;
+    current.next = prev;
+    prev = current;
+    current = next;
+    count++;
+  }
+  // next is now the list element at k + 1
+  if (next !== null) {
+    // recurse to set the final element of each subset
+    listNode.next = reverseInGroups(next, k);
+  }
+  return prev;
 };
 
 function basicReverse(list) {
@@ -131,14 +162,48 @@ LinkedList.prototype = {
 }
 
 // 1->2->3  >>>  3->2->1
-var simpleTest = new LinkedList();
-simpleTest.append(3);
-simpleTest.prepend(2);
-simpleTest.prepend(1);
-simpleTest.prepend(0);
-simpleTest.append(4);
-simpleTest.print();
-basicReverse(simpleTest);
-console.log('---');
-simpleTest.print();
-console.log(simpleTest);
+var test = new ListNode(1);
+test.next = new ListNode(2);
+test.next.next = new ListNode(3);
+console.log(test);
+console.log(reverseInGroups(test, 3));
+
+
+
+
+
+
+
+
+// var simpleTest = new LinkedList();
+// simpleTest.append(3);
+// simpleTest.prepend(2);
+// simpleTest.prepend(1);
+// simpleTest.prepend(0);
+// simpleTest.append(4);
+// simpleTest.print();
+// reverseInGroups(simpleTest.head, 2);
+// console.log('---');
+// simpleTest.print();
+// console.log(simpleTest);
+
+
+// Abandoned attempt(s)
+
+/*
+  // create a pointer to the first of the k elements
+  var firstOfK = listNode;
+  // create a travelingPointer, starting set to the first of the k elements
+  var travelingPointer = listNode;
+  // set the second.next of the k elements to the travelingPointer
+  var currNode = listNode.next;
+  for (var i = k - 1; i > 0; i--) {
+    // set element.next to travelingPointer
+    currNode.next = travelingPointer;
+    // update the travelingPointer and currNode to .next
+    currNode = currNode.next;
+    travelingPointer = travelingPointer.next;
+  }
+  // once on the k + 1 element, set firstOfK.next to it
+  firstOfK.next = currNode;
+*/
