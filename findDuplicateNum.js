@@ -15,5 +15,13 @@ There is only one duplicate number in the array, but it could be repeated more t
  * @return {number}
  */
 var findDuplicate = function(nums) {
-  
+  var freq = {};
+  for (var i = 0; i < nums.length; i++) {
+    var curr = nums[i];
+    if (curr in freq) {
+      return curr;
+    } else {
+      freq[curr] = 1;
+    }
+  }
 };
