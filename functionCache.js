@@ -9,35 +9,30 @@ Example:
 const complexFunction = function(arg1, arg2) { return arg1 + arg2 };
 const cachedFunction = cache(complexFunction);
 
+const reverse = function(argArr) { return argArr.reverse(); };
+const cachedReverse = cache(reverse);
+
+console.log(cachedReverse([3,2,1]));
+console.log(cachedReverse([3,2,1]));
+console.log(cachedReverse(["foo","bar","baz"]));
+console.log(cachedReverse(["foo","bar","baz"]));
+
 console.log(cachedFunction('foo', 'bar')); // complex function should be executed
 console.log(cachedFunction('foo', 'bar')); // complex function should not be invoked again, instead the cached result should be returned
 console.log(cachedFunction('foo', 'baz')); // should be executed, because the method wasn't invoked before with these arguments
 console.log(cachedFunction('foo', 'baz')); // complex function should not be invoked again, instead the cached result should be returned
 
-cachedFunction(4, 10);
-cachedFunction(4, 10);
-cachedFunction(5, 10);
-cachedFunction(5, 10);
-
-
 function cache(func) {
-  // store args and return values
   let store = {};
 
   return function(...args) {
-    console.log('arguments to internal function are:', args);
-    // build a key from the args array
     let key = '';
-    args.forEach( arg => key += arg + '_');
-    console.log('key happens to be: ', key);
-    // if we have called it in the past with given args
+    key += this;
+    args.forEach( arg => key += JSON.stringify(arg) + '_');
+
     if (key in store) {
-      //  return the result from prev call
-      console.log('not called, returned stored result');
       return store[key];
-    } else { // else
-      // call with given args and store result
-      console.log('called and stored');
+    } else {
       return store[key] = func(...args);
     }
   };
