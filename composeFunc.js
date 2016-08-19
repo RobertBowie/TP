@@ -7,9 +7,12 @@ function parameters in turn. So:
 var doubleTheValue = function(val) { return val * 2; }
 var addOneToTheValue = function(val) { return val + 1; }
 
-compose(5, doubleTheValue) // should === 10
-compose(5, doubleTheValue, addOneToTheValue) // should === 11
+console.log(compose(5, doubleTheValue)) // should === 10
+console.log(compose(5, doubleTheValue, addOneToTheValue)) // should === 11
 
-var compose = function() {
-  
+function compose(val, ...args) {
+  if (arguments.length === 1) { return val; }
+  let result = val;
+  args.forEach( func => result = func(result) );
+  return result;
 };
