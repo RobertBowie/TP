@@ -15,9 +15,50 @@ As this is an elementary example of events, there are some simplifications:
 */
 
 function Event() {
-  
+  let subscribed = [];
+  return {
+    subscribe: function(func) {
+      // takes a function and stores it as its handler
+      subscribed.push(func);
+    },
+    unsubscribe: function(func) {
+      // takes a function and removes it from its handlers
+      const indexOf = subscribed.indexOf(func);
+      if (indexOf > -1) {
+        subscribed.splice(indexOf, 1);
+      }
+    },
+    emit: function(...args) {
+      // takes args and calls all stored funcs with theses args
+      subscribed.forEach(func => func(...args));
+    }
+  };
 };
 
+/*
+function Event() {
+  let subscribed = {};
+  return {
+    subscribe: function(func) {
+      // takes a function and stores it as its handler
+      subscribed[func] = func;
+    },
+    unsubscribe: function(func) {
+      // takes a function and removes it from its handlers
+      if (func in subscribed) {
+        delete subscribed[func];
+      }
+    },
+    emit: function(...args) {
+      // takes args and calls all stored funcs with theses args
+      for (var func in subscribed) {
+        console.log(func, args);
+        subscribed[func](...args);
+      }
+    }
+  };
+};
+*/
 
 // Test
 
@@ -38,3 +79,14 @@ event.unsubscribe(f);
 event.emit(2);
 
 console.log(f.calls === 1); // no second call, should be true
+
+function _stub() {
+  _stub.args = Array.prototype.slice.call(arguments);
+  _stub.calls = (_stub.calls || 0) + 1;
+};
+
+event.subscribe(_stub);
+event.emit([ 1, 2, 3, 'first', undefined, false ]);
+
+console.log(_stub.calls);
+console.log(_stub.args);
