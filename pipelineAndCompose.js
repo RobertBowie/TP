@@ -39,13 +39,14 @@ function pipeline(seed, ...args) {
     return seed;
   }
   // returns the result of the functions applied to the seed
-  let result = seed;
-  args.forEach(func => result = func(result));
-  return result;
+  return args.reduce((prev, curr) => curr(prev), seed);
 };
 
-function compose() {
+function compose(...args) {
   // returns a function that will be applied to a seed eventually
+  return function(arg) {
+    return args.reduceRight((prev, curr) => curr(prev), arg);
+  }
 };
 
 // Test
@@ -57,5 +58,4 @@ Test.assertEquals(pipeline(42, function(n) { return -n; }, function(n) { return 
 var greet    = function(name){ return "hi: " + name; };
 var exclaim  = function(statement){ return statement.toUpperCase() + "!"; };
 var welcome = compose(greet, exclaim);
-
-Test.assertEquals(welcome('moe'), 'hi: MOE!')
+Test.assertEquals(welcome('moe'), 'hi: MOE!', 'It should execute compsed functions, each consuming the result of the next')
