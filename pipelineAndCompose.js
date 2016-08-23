@@ -31,8 +31,17 @@ welcome('moe');
 => 'hi: MOE!'
 */
 
-function pipeline(seed /*, args */) {
+function pipeline(seed, ...args) {
+  if (arguments.length === 0) {
+    return;
+  }
+  if (arguments.length === 1) {
+    return seed;
+  }
   // returns the result of the functions applied to the seed
+  let result = seed;
+  args.forEach(func => result = func(result));
+  return result;
 };
 
 function compose() {
@@ -40,10 +49,10 @@ function compose() {
 };
 
 // Test
-Test.expect(false, 'It should fail when intentionally set to fail')
 Test.expect(pipeline() === void 0, 'It should handle when there is no seed and no function')
 Test.assertEquals(pipeline(42), 42, 'It should handle when only the seed is specified')
 Test.assertEquals(pipeline(42, function(n) { return -n; }), -42, 'It should handle when a seed and a function are specified')
+Test.assertEquals(pipeline(42, function(n) { return -n; }, function(n) { return n + 1}), -41, 'It should handle when a seed and functions are specified')
 
 var greet    = function(name){ return "hi: " + name; };
 var exclaim  = function(statement){ return statement.toUpperCase() + "!"; };
