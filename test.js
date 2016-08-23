@@ -1,14 +1,14 @@
-export default {
+module.exports = {
   expect: function(expression, message) {
-    // Return either 'Test Passed' if expression is true
-
-    // or return message on false
-
+    if (!!expression) {
+      console.log('√ - Test Passed');
+    }
+    console.log('X - ' + message);
   },
   assertEquals: function(arg1, arg2, message) {
-    // Return 'Test Passed' if arg1 and arg2 are equal
-
-    // or return message
-    
+    if (arg1 == arg2) {
+      console.log('√ - Test Passed');
+    }
+    console.log('X - ' + message);
   }
 }
