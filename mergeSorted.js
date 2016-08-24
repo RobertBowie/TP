@@ -19,14 +19,30 @@ the problem.
 // Do not use Array.sort
 function mergesorted(a, b) {
   let result = [];
+  let reverseA = a.reverse();
+  let reverseB = b.reverse();
   // while our lists have contents
-  while (a.length || b.length) {
-    // Take the lower of the first number in a or b
-    if (a[0] <= b[0]) {
+  while (reverseA.length > 0 || reverseB.length > 0) {
+    const aLength = reverseA.length - 1;
+    const bLength = reverseB.length - 1;
+    // if there are no numbers left to sort in one array
+    if (reverseA.length === 0) {
+      result.push(reverseB[bLength]);
+      reverseB.length = bLength;
+      continue;
+    } else if (reverseB.length === 0) {
+      result.push(reverseA[aLength]);
+      reverseA.length = aLength;
+      continue;
+    }
+    // Take the lower of the last number in a or b
+    if (reverseA[aLength] <= reverseB[bLength]) {
       // add to result array
-      result.push(a.shift());
+      result.push(reverseA[aLength]);
+      reverseA.length = aLength;
     } else {
-      result.push(b.shift());
+      result.push(reverseB[bLength]);
+      reverseB.length = bLength;
     }
   }
   return result;
