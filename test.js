@@ -11,6 +11,6 @@ module.exports = {
       console.log('√ - Test Passed');
       return;
     }
-    console.log('X - ' + message, 'Expected ' + arg2 + ', got ' + arg1);
+    console.log('X - \'' + message + '\' Expected ' + arg2 + ', got ' + arg1);
   }
 }
