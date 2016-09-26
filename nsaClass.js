@@ -1,3 +1,4 @@
+let Test = require('./test');
 /* Create a Person constructor. Each instance of Person will have a minimum of three exposed properties: name, text, and call.
 
 The property name will be a simple string representing the name of the Person instance.
@@ -42,7 +43,11 @@ Erase each individual record after we read that particular one from the log.
 */
 
 // Create the NSA object 
-var NSA = {};
+var NSA = {
+  log: function() {
+
+  }
+};
 
 
 // Create the Person constructor
@@ -53,3 +58,18 @@ var Person = function() {
   this.text = function(cellphone) { 
   }
 }
+
+// Test
+
+// Create two people
+var dan = new Person("Dan");
+var mark = new Person("Mark");
+
+// Create a phone object
+var phone = {owner: dan, number: '202-555-0199'};
+
+// Make a phone call
+dan.call(phone, mark); 
+
+// Ensure our logs are accurate
+Test.assertEquals(NSA.log(dan), 'Dan called Mark from Dan\'s phone(202-555-0199)');
