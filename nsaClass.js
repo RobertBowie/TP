@@ -44,18 +44,55 @@ Erase each individual record after we read that particular one from the log.
 
 // Create the NSA object 
 var NSA = {
-  log: function() {
-
+  log: function(person) {
+    let logOutput = '';
+    while (person.callLog.length > 0) {
+      let call = person.callLog[0];
+      logOutput += call.caller + ' called ' + call.callee + ' from ' + call.owner + '\'s phone(' + call.cellNumber + ')';
+      person.callLog.shift();
+      if (person.callLog.length > 0) {
+        logOutput += '\n';
+      }
+    };
+    while (person.textLog.length > 0) {
+      call = person.textLog[0];
+      logOutput += call.caller + ' texted ' + call.callee + ' from ' + call.owner + '\'s phone(' + call.cellNumber + ')';
+      person.textLog.shift();
+      if (person.textLog.length > 0) {
+        logOutput += '\n';
+      }
+    };
+    if (logOutput.length === 0) {
+      return 'No Entries';
+    }
+    return logOutput;
   }
 };
 
 
 // Create the Person constructor
-var Person = function() { 
-  this.name;
+var Person = function(name) { 
+  this.name = name;
+  this.callLog = [];
+  this.textLog = [];
   this.call = function(cellphone, callee) {
+    this.callLog.push({
+      caller: this.name,
+      owner: cellphone.owner.name,
+      cellNumber: cellphone.number,
+      callee: callee.name
+    });
   }
-  this.text = function(cellphone) { 
+  this.text = function(cellphone) {
+    let people = Array.prototype.slice.call(arguments, 1);
+    people.forEach(person => {
+      this.textLog.push({
+        caller: this.name,
+        owner: cellphone.owner.name,
+        cellNumber: cellphone.number,
+        callee: person.name
+      });
+    });
   }
 }
 
@@ -69,7 +106,13 @@ var mark = new Person("Mark");
 var phone = {owner: dan, number: '202-555-0199'};
 
 // Make a phone call
-dan.call(phone, mark); 
+dan.call(phone, mark);
 
 // Ensure our logs are accurate
 Test.assertEquals(NSA.log(dan), 'Dan called Mark from Dan\'s phone(202-555-0199)');
+
+// Text
+dan.text(phone, mark, dan);
+
+// Check logs
+Test.assertEquals(NSA.log(dan), 'Dan texted Mark from Dan\'s phone(202-555-0199)\nDan texted Dan from Dan\'s phone(202-555-0199)');
